@@ -6,14 +6,15 @@ Flowshield is a wearable device under development that estimates bladder volume 
 The Simulink model ('models/Flowshield_Prototypefinal.slx') simulates bladder volume using a differential equation (dV/dt = Q_in - Q_out) with Stateflow logic for the Normal, Warning (300mL) , and Urgent (600mL) alert states and for voiding.
 
 ## Repository Structure
-
+```
 Flowshield/
-|-- main.py
-|-- requirements.txt
-|-- README.md
-|-- gui/ (flowshield.ui, flowshield_ui.py, main_window.py)
-|-- simulation/ (matlab_interface.py)
-|-- models/ (Flowshield_Prototypefinal.slx)
+├── main.py
+├── requirements.txt
+├── README.md
+├── gui/          (flowshield.ui, flowshield_ui.py, main_window.py)
+├── simulation/   (matlab_interface.py)
+└── models/       (Flowshield_Prototypefinal.slx)
+```
 
 ## Running the Simulink Model on Its Own
 Note: developed with MATLAB 25.1.0.2973910 (R2025a), with Simulink and Stateflow installed.
