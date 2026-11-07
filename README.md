@@ -11,8 +11,8 @@ differential equation. A two page GUI has been constructed to show the results o
 1. To install the MATLAB Simulink model you have to have MATLAB installed.
 2. Then download the Flowshield_Prototype.slx file.
 3. Click on the downloaded .slx file and it should open in MATLAB.
-4. In order to run the Simulink model you have to set the initial volume which is in the block.
-5. Once this block is clicked click on the minimum and change it to mL. The maximum bladder volume currently set is 700mL based on prior research.
+4. In order to run the Simulink model you have to set the initial volume which is in the V_t block.
+5. Once this block is clicked press on the Initial_Condition and change it to an experimental bladder volume. The maximum bladder volume currently set is 700mL based on prior research.
 6. After the initial parameters are set run the model with the run button the top of the page or press Ctrl + T.
 
 ### Directions for running the GUI
