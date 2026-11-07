@@ -1,24 +1,48 @@
-**Flowshield**
+#**Flowshield**
 
-# Description
-Flowshield is a physical device that measures bladder volume from impedance changes from the body. The physical device is a belt that wraps
-around a person's lower abdomen and uses bioimpedance analysis to send and measure electrical signals from the body. In the models folder there
-is a slx file. The Flowshield_Prototypefinal.slx file is a MATLAB Simulink model that simulates bladder volume based on the logic of a water tank
-differential equation. A two page GUI has been constructed to show the results of the Simulink model to the user.
+## Description
+Flowshield is a wearable device under development that estimates bladder volume from bioimpedance (BioZ) measurements taken with a belt around the lower abdomen. This repository contains the software prototype: a MATLAB Simulink model of filling and voiding with alert states, and a two-page Python GUI that runs the model and displays results. BioZ hardware (MAX30009 evaluation kit, electrodes, belt) has not been integrated yet.
 
-## Directions for running Simulink model.
-** Disclaimer the version of MATLAB that is used is 25.1.0.2973910.
-1. To install the MATLAB Simulink model you have to have MATLAB installed.
-2. Then download the Flowshield_Prototype.slx file.
-3. Click on the downloaded .slx file and it should open in MATLAB.
-4. In order to run the Simulink model you have to set the initial volume which is in the V_t block.
-5. Once this block is clicked press on the Initial_Condition and change it to an experimental bladder volume. The maximum bladder volume currently set is 700mL based on prior research.
-6. After the initial parameters are set run the model with the run button the top of the page or press Ctrl + T.
+The Simulink model ('models/Flowshield_Prototypefinal.slx') simulates bladder volume using a differential equation (dV/dt = Q_in - Q_out) with Stateflow logic for the Normal, Warning (300mL) , and Urgent (600mL) alert states and for voiding.
 
-### Directions for running the GUI
-** Disclaimer the version of Python that can be used is Python 3.12.16 or less. Python 3.13 and up will not work. This is due to the MATLAB version currently being used.
-1. Download Pyside6 Qt Designer
-2. Fork or Clone this repository to have access to all necessary files.
-3. A virtual environment has been created to be able to use the right version of Python to run the GUI.
-4. To activate the virtual environment run this code in the terminal **c:/(The folder where Flowshield is downloaded locally)/.venv/Scripts/Activate.ps1**
-5. Now that the virtual environment is activated you can now run the GUI from your terminal with the command **python main.py**
+## Repository Structure
+
+Flowshield/
+|-- main.py
+|-- requirements.txt
+|-- README.md
+|-- gui/ (flowshield.ui, flowshield_ui.py, main_window.py)
+|-- simulation/ (matlab_interface.py)
+|-- models/ (Flowshield_Prototypefinal.slx)
+
+## Running the Simulink Model on Its Own
+Note: developed with MATLAB 25.1.0.2973910 (R2025a), with Simulink and Stateflow installed.
+1. Clone this repository.
+2. Open `models/Flowshield_Prototypefinal.slx` in MATLAB.
+3. Double-click the `V_t` integrator block and set **Initial condition** to the starting bladder volume in mL.
+4. Run the model with the Run button or Ctrl + T.
+
+The model logs `bladder_volume`, `urgent`, `warning`, and `void_event`. The GUI reads these signals by name, so keep the names if you edit the model. When you use the GUI, it sets the initial volume for you.
+
+## Running the GUI
+Note: the Python version must be supported by your MATLAB release. For R2025a, use Python 3.12 or lower. Python 3.13 and up will not work.
+1. Install MATLAB R2025a with Simulink and Stateflow.
+2. Clone this repository.
+3. In the repository folder, create and activate a virtual environment (PowerShell):
+   ```
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
+4. Install the dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+5. Run the GUI from the repository folder:
+   ```
+   python main.py
+   ```
+
+The first simulation takes longer (10-30 seconds) because MATLAB starts on the first run.
+
+Optional: install Qt Designer (included with PySide6 tools) only if you want to edit `gui/flowshield.ui`.
+
