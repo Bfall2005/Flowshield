@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1035</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="styleSheet">
+       <string notr="true">/* FlowShield background */
+QMainWindow,
+QWidget#centralwidget,
+QWidget#pageConfiguration,
+QWidget#pageResults {
+    background-color: #EAF2F5;
+}
+
+/* Text and headings */
+QLabel {
+    color: #17324D;
+}
+
+/* Input fields */
+QSpinBox, QComboBox {
+    background-color: #FFFFFF;
+    color: #263746;
+    border: 1px solid #B8CDD5;
+    border-radius: 6px;
+    padding: 6px;
+    min-height: 24px;
+}
+
+/* Highlight selected inputs */
+QSpinBox:focus, QComboBox:focus {
+    border: 2px solid #087F8C;
+}
+
+/* Run Simulation button */
+QPushButton#btnRunSimulation {
+    background-color: #087F8C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+}
+
+/* Hover effect */
+QPushButton#btnRunSimulation:hover {
+    background-color: #066773;
+}
+
+/* Button pressed */
+QPushButton#btnRunSimulation:pressed {
+    background-color: #054F59;
+}</string>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="pageConfirmation">
+       <property name="styleSheet">
+        <string notr="true">QWidget#pageConfiguration {
+    background-color: #EAF2F5;
+}</string>
+       </property>
+       <widget class="QFrame" name="frame_3">
+        <property name="geometry">
+         <rect>
+          <x>-20</x>
+          <y>0</y>
+          <width>1061</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget#frame_3 {
+    background-color: #EAF2F5;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>430</x>
+           <y>10</y>
+           <width>160</width>
+           <height>43</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Flowshield</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_6">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>80</y>
+           <width>258</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 700 16pt &quot;Segoe UI&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Bladder Monitoring Setup</string>
+         </property>
+        </widget>
+        <widget class="QFrame" name="frame">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>120</y>
+           <width>751</width>
+           <height>123</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">Q_Frame{
+    background-color: #FFFFFF;
+    border: 1px solid #D5E3E8;
+    border-radius: 10px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="styleSheet">
+             <string notr="true">font: 700 14pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>User Information</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Age</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Sex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QSpinBox" name="spinAge"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="comboSex">
+            <item>
+             <property name="text">
+              <string>Male</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Female</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QFrame" name="frame_2">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>250</y>
+           <width>751</width>
+           <height>191</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">Qframe_2 {
+    background-color: #FFFFFF;
+    border: 1px solid #D5E3E8;
+    border-radius: 10px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Simulation Duration</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="styleSheet">
+             <string notr="true">font: 700 11pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>400-600 mL</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QLabel" name="label_10">
+            <property name="styleSheet">
+             <string notr="true">font: 9pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Illustrative adult reference range, not an individualized prediction.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QSpinBox" name="spinInitialVolume">
+            <property name="maximum">
+             <number>650</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Initial Bladder Volume (mL)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="comboDuration">
+            <item>
+             <property name="text">
+              <string>1 min</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>5 min</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10 min</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 min</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1 hour</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>5 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24 hours</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="styleSheet">
+             <string notr="true">font: 700 14pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Simulation Details</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Reference Bladder Capacity</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QPushButton" name="btnRunSimulation">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>470</y>
+           <width>331</width>
+           <height>45</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#btnRunSimulation {
+    background-color: #087F8C;
+    color: white;
+    border-radius: 8px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Run Simulation</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="pageResults">
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>70</y>
+          <width>271</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 700 16pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Bladder Simulation Results</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frameSummary">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>951</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Parent frame containing all three boxes */
+QFrame#frameSummary {
+    background-color: transparent;
+    border: none;
+}
+
+/* Individual white summary boxes */
+QFrame#frameInitialVolume,
+QFrame#frameFinalVolume,
+QFrame#frameAlertStatus {
+    background-color: #FFFFFF;
+    border: 1px solid #D5E3E8;
+    border-radius: 10px;
+}
+
+/* Heading labels */
+QLabel#lblInitialTitle,
+QLabel#lblFinalTitle,
+QLabel#lblAlertTitle {
+    color: #526778;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: transparent;
+    border: none;
+}
+
+/* Value labels */
+QLabel#lblInitialVolume,
+QLabel#lblFinalVolume,
+QLabel#lblAlertStatus {
+    color: #087F8C;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 21px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QFrame" name="frameInitialVolume">
+           <property name="frameShape">
+            <enum>QFrame::Shape::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Shadow::Raised</enum>
+           </property>
+           <widget class="QLabel" name="lblInitialTitle">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>10</y>
+              <width>101</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Initial Volume</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblInitialVolume">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>40</y>
+              <width>111</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>299 mL</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frameFinalVolume">
+           <property name="frameShape">
+            <enum>QFrame::Shape::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Shadow::Raised</enum>
+           </property>
+           <widget class="QLabel" name="lblFinalTitle">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>101</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Final Volume</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblFinalVolume">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>40</y>
+              <width>121</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>353 mL</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frameAlertStatus">
+           <property name="frameShape">
+            <enum>QFrame::Shape::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Shadow::Raised</enum>
+           </property>
+           <widget class="QLabel" name="lblAlertTitle">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>81</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Final Alert</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblAlertStatus">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>30</y>
+              <width>91</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Warning</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QFrame" name="frame_5">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>240</y>
+          <width>301</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Heading labels */
+QLabel#lblDuration,
+QLabel#lblBladderState{
+    color: #526778;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: transparent;
+    border: none;
+}
+
+/* Value labels */
+QLabel#lbltime,
+QLabel#label_18{
+    color: #087F8C;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 21px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="lblDuration">
+             <property name="text">
+              <string>Duration:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lbltime">
+             <property name="text">
+              <string>1 hour</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="lblBladderState">
+             <property name="text">
+              <string>Current Bladder State:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Filling</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QFrame" name="frame_4">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>200</y>
+          <width>631</width>
+          <height>261</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QWidget" name="graphContainer" native="true"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>10</y>
+          <width>160</width>
+          <height>43</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Flowshield</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_Navigation">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>470</y>
+          <width>951</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Bottom navigation frame */
+QFrame#frame_Navigation {
+    background-color: #FFFFFF;
+    border: 1px solid #D5E3E8;
+    border-radius: 8px;
+}
+
+/* Back to Setup button */
+QPushButton#btnBack {
+    background-color: #FFFFFF;
+    color: #087F8C;
+    border: 1px solid #087F8C;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* Back button hover */
+QPushButton#btnBack:hover {
+    background-color: #DDEEF0;
+}
+
+/* Run Again button */
+QPushButton#btnRun {
+    background-color: #087F8C;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* Run Again hover */
+QPushButton#btnRun:hover {
+    background-color: #066773;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="btnBack">
+           <property name="text">
+            <string>Back to Setup</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnRun">
+           <property name="text">
+            <string>Run Again</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>710</x>
+          <y>200</y>
+          <width>271</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 700 16pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Simulation Summary</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1035</width>
+     <height>33</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
