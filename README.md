@@ -1,4 +1,4 @@
-#**Flowshield**
+# **Flowshield**
 
 ## Description
 Flowshield is a wearable device under development that estimates bladder volume from bioimpedance (BioZ) measurements taken with a belt around the lower abdomen. This repository contains the software prototype: a MATLAB Simulink model of filling and voiding with alert states, and a two-page Python GUI that runs the model and displays results. BioZ hardware (MAX30009 evaluation kit, electrodes, belt) has not been integrated yet.
