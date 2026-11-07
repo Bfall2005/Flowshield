@@ -17,7 +17,7 @@ differential equation. A two page GUI has been constructed to show the results o
 
 ### Directions for running the GUI
 ** Disclaimer the version of Python that can be used is Python 3.12.16 or less. Python 3.13 and up will not work. This is due to the MATLAB version currently being used.
-1. Dowload Pyside6 Qt Designer
+1. Download Pyside6 Qt Designer
 2. Fork or Clone this repository to have access to all necessary files.
 3. A virtual environment has been created to be able to use the right version of Python to run the GUI.
 4. To activate the virtual environment run this code in the terminal **c:/(The folder where Flowshield is downloaded locally)/.venv/Scripts/Activate.ps1**
