@@ -71,7 +71,7 @@ QPushButton#btnRunSimulation:pressed {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageConfirmation">
        <property name="styleSheet">
@@ -185,7 +185,11 @@ QPushButton#btnRunSimulation:pressed {
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QSpinBox" name="spinAge"/>
+           <widget class="QSpinBox" name="spinAge">
+            <property name="minimum">
+             <number>18</number>
+            </property>
+           </widget>
           </item>
           <item row="2" column="1">
            <widget class="QComboBox" name="comboSex">
@@ -259,7 +263,7 @@ QPushButton#btnRunSimulation:pressed {
           <item row="2" column="0">
            <widget class="QSpinBox" name="spinInitialVolume">
             <property name="maximum">
-             <number>650</number>
+             <number>700</number>
             </property>
            </widget>
           </item>

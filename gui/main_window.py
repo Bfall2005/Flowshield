@@ -1,7 +1,7 @@
-
 import sys
 from pathlib import Path
 
+from PySide6.QtCore import QObject, QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
     QVBoxLayout,
@@ -13,6 +13,42 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
 from simulation.matlab_interface import run_simulation
+
+
+# Must match the items in the Duration dropdown in flowshield.ui exactly
+DURATION_OPTIONS = {
+    "1 min": 60,
+    "5 min": 300,
+    "10 min": 600,
+    "30 min": 1800,
+    "1 hour": 3600,
+    "2 hours": 7200,
+    "5 hours": 18000,
+    "10 hours": 36000,
+    "24 hours": 86400,
+}
+
+
+class SimulationWorker(QObject):
+    """Runs MATLAB/Simulink off the GUI thread so the window doesn't freeze."""
+
+    finished = Signal(dict)
+    failed = Signal(str)
+
+    def __init__(self, duration, initial_volume):
+        super().__init__()
+        self.duration = duration
+        self.initial_volume = initial_volume
+
+    def run(self):
+        try:
+            results = run_simulation(
+                duration=self.duration,
+                initial_volume=self.initial_volume
+            )
+            self.finished.emit(results)
+        except Exception as error:
+            self.failed.emit(str(error))
 
 
 class FlowShieldGUI:
@@ -60,7 +96,15 @@ class FlowShieldGUI:
         graph_layout.addWidget(self.canvas)
 
         # ----------------------------------
-        # 6. Start on configuration page
+        # 6. Worker thread bookkeeping
+        # ----------------------------------
+        self.thread = None
+        self.worker = None
+        self.duration_text = ""
+        self._run_button_text = self.btn_run_simulation.text()
+
+        # ----------------------------------
+        # 7. Start on configuration page
         # ----------------------------------
         self.pages.setCurrentIndex(0)
 
@@ -70,16 +114,9 @@ class FlowShieldGUI:
         # 1. Read Page 1 inputs
         # ----------------------------------
         initial_volume_input = self.window.spinInitialVolume.value()
-        duration_text = self.window.comboDuration.currentText()
+        self.duration_text = self.window.comboDuration.currentText()
 
-        duration_options = {
-            "1 minute": 60,
-            "30 minutes": 1800,
-            "1 hour": 3600,
-            "2 hours": 7200
-        }
-
-        if duration_text not in duration_options:
+        if self.duration_text not in DURATION_OPTIONS:
             QMessageBox.warning(
                 self.window,
                 "Invalid Duration",
@@ -87,68 +124,87 @@ class FlowShieldGUI:
             )
             return
 
-        duration = duration_options[duration_text]
+        duration = DURATION_OPTIONS[self.duration_text]
 
         print(f"Selected initial volume: {initial_volume_input} mL")
         print(f"Selected duration: {duration} seconds")
 
         # ----------------------------------
-        # 2. Run MATLAB/Simulink
+        # 2. Run MATLAB/Simulink in a worker thread
         # ----------------------------------
-        try:
-            results = run_simulation(duration=duration)
+        self.btn_run_simulation.setEnabled(False)
+        self.btn_run_simulation.setText("Running simulation...")
 
-        except Exception as error:
-            QMessageBox.critical(
-                self.window,
-                "Simulation Error",
-                f"MATLAB/Simulink failed:\n{error}"
-            )
-            return
+        self.thread = QThread()
+        self.worker = SimulationWorker(duration, initial_volume_input)
+        self.worker.moveToThread(self.thread)
 
-        # ----------------------------------
-        # 3. Extract simulation results
-        # ----------------------------------
-        initial_volume = results["initial_volume"]
-        final_volume = results["final_volume"]
+        self.thread.started.connect(self.worker.run)
+        self.worker.finished.connect(self.on_simulation_finished)
+        self.worker.failed.connect(self.on_simulation_failed)
 
-        # ----------------------------------
-        # 4. Determine alert state
-        # ----------------------------------
-        if final_volume >= 600:
-            alert = "Urgent"
-        elif final_volume >= 300:
-            alert = "Warning"
-        else:
-            alert = "Normal"
+        # Clean up the thread once the worker reports back
+        self.worker.finished.connect(self.thread.quit)
+        self.worker.failed.connect(self.thread.quit)
+        self.thread.finished.connect(self.thread.deleteLater)
+
+        self.thread.start()
+
+    def on_simulation_finished(self, results):
+
+        self._reset_run_button()
 
         # ----------------------------------
-        # 5. Update Page 2 summary labels
+        # 3. Update Page 2 summary labels
         # ----------------------------------
         self.window.lblInitialVolume.setText(
-            f"{initial_volume:.1f} mL"
+            f"{results['initial_volume']:.1f} mL"
         )
 
         self.window.lblFinalVolume.setText(
-            f"{final_volume:.1f} mL"
+            f"{results['final_volume']:.1f} mL"
         )
 
-        self.window.lblAlertStatus.setText(alert)
+        # Final alert from the Stateflow output. If Urgent fired earlier
+        # but the bladder has since voided, show that too.
+        alert_text = results["final_alert"]
+        if results["peak_alert"] != results["final_alert"]:
+            alert_text += f" (peak: {results['peak_alert']})"
+        self.window.lblAlertStatus.setText(alert_text)
 
-        self.window.lblDuration.setText(duration_text)
+        self.window.lbltime.setText(self.duration_text)
 
-        # Bladder mode is not yet retrieved from Simulink
-        self.window.lblBladderState.setText("Not available")
+        # Filling / Voiding from the Bladder_Controller void_event signal
+        self.window.label_18.setText(results["state"])
+
+        # Time to Urgent is in results["time_to_urgent"] (seconds, or None).
+        # Put it on whichever label you want, for example:
+        # t = results["time_to_urgent"]
+        # self.window.lbltime.setText("Not reached" if t is None else f"{t:.0f} s")
 
         # ----------------------------------
-        # 6. Update Matplotlib graph
+        # 4. Update Matplotlib graph
         # ----------------------------------
         self.update_graph(results)
 
         # ----------------------------------
-        # 7. Switch to results page
+        # 5. Switch to results page
         # ----------------------------------
         self.pages.setCurrentIndex(1)
+
+    def on_simulation_failed(self, message):
+
+        self._reset_run_button()
+
+        QMessageBox.critical(
+            self.window,
+            "Simulation Error",
+            f"MATLAB/Simulink failed:\n{message}"
+        )
+
+    def _reset_run_button(self):
+        self.btn_run_simulation.setEnabled(True)
+        self.btn_run_simulation.setText(self._run_button_text)
 
     def update_graph(self, results):
 
@@ -200,8 +256,8 @@ class FlowShieldGUI:
         self.pages.setCurrentIndex(0)
 
     def run_again(self):
-        # Return to configuration page
-        self.pages.setCurrentIndex(0)
+        # Rerun the simulation with the same parameters
+        self.run_simulation()
 
     def show(self):
         self.window.show()

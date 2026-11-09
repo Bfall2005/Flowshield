@@ -134,6 +134,7 @@ class Ui_MainWindow(object):
 
         self.spinAge = QSpinBox(self.frame)
         self.spinAge.setObjectName(u"spinAge")
+        self.spinAge.setMinimum(18)
 
         self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.spinAge)
 
@@ -176,7 +177,7 @@ class Ui_MainWindow(object):
 
         self.spinInitialVolume = QSpinBox(self.frame_2)
         self.spinInitialVolume.setObjectName(u"spinInitialVolume")
-        self.spinInitialVolume.setMaximum(650)
+        self.spinInitialVolume.setMaximum(700)
 
         self.gridLayout.addWidget(self.spinInitialVolume, 2, 0, 1, 1)
 
@@ -287,7 +288,7 @@ class Ui_MainWindow(object):
         self.lblInitialTitle.setStyleSheet(u"font: 12pt \"Segoe UI\";")
         self.lblInitialVolume = QLabel(self.frameInitialVolume)
         self.lblInitialVolume.setObjectName(u"lblInitialVolume")
-        self.lblInitialVolume.setGeometry(QRect(20, 40, 81, 21))
+        self.lblInitialVolume.setGeometry(QRect(20, 40, 111, 21))
 
         self.horizontalLayout.addWidget(self.frameInitialVolume)
 
@@ -301,7 +302,7 @@ class Ui_MainWindow(object):
         self.lblFinalTitle.setStyleSheet(u"font: 12pt \"Segoe UI\";")
         self.lblFinalVolume = QLabel(self.frameFinalVolume)
         self.lblFinalVolume.setObjectName(u"lblFinalVolume")
-        self.lblFinalVolume.setGeometry(QRect(20, 40, 81, 21))
+        self.lblFinalVolume.setGeometry(QRect(20, 40, 121, 21))
 
         self.horizontalLayout.addWidget(self.frameFinalVolume)
 
@@ -467,7 +468,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
