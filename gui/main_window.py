@@ -30,7 +30,7 @@ DURATION_OPTIONS = {
 
 
 class SimulationWorker(QObject):
-    """Runs MATLAB/Simulink off the GUI thread so the window doesn't freeze."""
+    #Runs MATLAB/Simulink off the GUI thread so the window doesn't freeze.
 
     finished = Signal(dict)
     failed = Signal(str)
@@ -54,10 +54,7 @@ class SimulationWorker(QObject):
 class FlowShieldGUI:
 
     def __init__(self):
-
-        # ----------------------------------
-        # 1. Load the Qt Designer interface
-        # ----------------------------------
+        #Load GUI interface from Qt Designer .ui file
         ui_path = Path(__file__).resolve().parent / "flowshield.ui"
 
         loader = QUiLoader()
@@ -66,28 +63,20 @@ class FlowShieldGUI:
         if self.window is None:
             raise RuntimeError("Failed to load FlowShield GUI")
 
-        # ----------------------------------
-        # 2. Access the stacked pages
-        # ----------------------------------
+        #Access stacked packages
         self.pages = self.window.stackedWidget
 
-        # ----------------------------------
-        # 3. Access GUI buttons
-        # ----------------------------------
+        #Access GUI buttons
         self.btn_run_simulation = self.window.btnRunSimulation
         self.btn_back = self.window.btnBack
         self.btn_run_again = self.window.btnRun
 
-        # ----------------------------------
-        # 4. Connect button functionality
-        # ----------------------------------
+        #Connect button functionality
         self.btn_run_simulation.clicked.connect(self.run_simulation)
         self.btn_back.clicked.connect(self.back_to_setup)
         self.btn_run_again.clicked.connect(self.run_again)
 
-        # ----------------------------------
-        # 5. Initialize Matplotlib graph
-        # ----------------------------------
+        #Initialize MATLAB graph
         self.figure = Figure(figsize=(6, 4))
         self.canvas = FigureCanvasQTAgg(self.figure)
 
@@ -95,24 +84,18 @@ class FlowShieldGUI:
         graph_layout.setContentsMargins(5, 5, 5, 5)
         graph_layout.addWidget(self.canvas)
 
-        # ----------------------------------
-        # 6. Worker thread bookkeeping
-        # ----------------------------------
+        #Worker thread bookkeeping
         self.thread = None
         self.worker = None
         self.duration_text = ""
         self._run_button_text = self.btn_run_simulation.text()
 
-        # ----------------------------------
-        # 7. Start on configuration page
-        # ----------------------------------
+        #Start Configuration Page
         self.pages.setCurrentIndex(0)
 
     def run_simulation(self):
 
-        # ----------------------------------
-        # 1. Read Page 1 inputs
-        # ----------------------------------
+        #Read Page 1 inputs
         initial_volume_input = self.window.spinInitialVolume.value()
         self.duration_text = self.window.comboDuration.currentText()
 
@@ -129,9 +112,7 @@ class FlowShieldGUI:
         print(f"Selected initial volume: {initial_volume_input} mL")
         print(f"Selected duration: {duration} seconds")
 
-        # ----------------------------------
-        # 2. Run MATLAB/Simulink in a worker thread
-        # ----------------------------------
+        #Run MATLAB/Simulink worker thread
         self.btn_run_simulation.setEnabled(False)
         self.btn_run_simulation.setText("Running simulation...")
 
@@ -154,9 +135,7 @@ class FlowShieldGUI:
 
         self._reset_run_button()
 
-        # ----------------------------------
-        # 3. Update Page 2 summary labels
-        # ----------------------------------
+        #Update Page 2 labels with results from MATLAB/Simulink
         self.window.lblInitialVolume.setText(
             f"{results['initial_volume']:.1f} mL"
         )
@@ -165,8 +144,7 @@ class FlowShieldGUI:
             f"{results['final_volume']:.1f} mL"
         )
 
-        # Final alert from the Stateflow output. If Urgent fired earlier
-        # but the bladder has since voided, show that too.
+        # Final alert from the Stateflow output.
         alert_text = results["final_alert"]
         if results["peak_alert"] != results["final_alert"]:
             alert_text += f" (peak: {results['peak_alert']})"
@@ -182,14 +160,10 @@ class FlowShieldGUI:
         # t = results["time_to_urgent"]
         # self.window.lbltime.setText("Not reached" if t is None else f"{t:.0f} s")
 
-        # ----------------------------------
-        # 4. Update Matplotlib graph
-        # ----------------------------------
+        #Update Matplotlib graph with results
         self.update_graph(results)
 
-        # ----------------------------------
-        # 5. Switch to results page
-        # ----------------------------------
+        #Switch to Results page
         self.pages.setCurrentIndex(1)
 
     def on_simulation_failed(self, message):
@@ -263,7 +237,7 @@ class FlowShieldGUI:
         self.window.show()
 
 
-# Optional standalone testing
+# Optional standalone testing for GUI
 def main():
     app = QApplication(sys.argv)
 

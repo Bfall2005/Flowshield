@@ -9,7 +9,7 @@ _eng = None  # one MATLAB engine, started on first use and reused
 
 
 def _engine():
-    """Start MATLAB once and reuse it for every run."""
+    #Start MATLAB once and reuse it for every run.
     global _eng
     if _eng is None:
         _eng = matlab.engine.start_matlab()
@@ -19,7 +19,7 @@ def _engine():
 
 
 def shutdown():
-    """Close the MATLAB engine (call when the app exits)."""
+    #Close the MATLAB engine (call when the app exits).
     global _eng
     if _eng is not None:
         _eng.quit()
@@ -27,7 +27,7 @@ def shutdown():
 
 
 def _signal(eng, name):
-    """Return (time, data) arrays for a logged signal in sim_result.logsout."""
+    #Return (time, data) arrays for a logged signal in sim_result.logsout.
     eng.eval(f"s = sim_result.logsout.get('{name}');", nargout=0)
     times = np.asarray(eng.eval("s.Values.Time", nargout=1), dtype=float).flatten()
     data = np.asarray(eng.eval("s.Values.Data", nargout=1), dtype=float).flatten()
