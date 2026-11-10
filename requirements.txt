@@ -1,4 +1,4 @@
 PySide6
 matplotlib
 numpy
-matlabengine==25.1*
+matlabengine==25.1.*
