@@ -1,25 +1,25 @@
-# **Flowshield**
+# **FlowShield**
 
 ## Description
-Flowshield is a wearable device under development that estimates bladder volume from bioimpedance (BioZ) measurements taken with a belt around the lower abdomen. This repository contains the software prototype: a MATLAB Simulink model of filling and voiding with alert states, and a two-page Python GUI that runs the model and displays results. BioZ hardware (MAX30009 evaluation kit, electrodes, belt) has not been integrated yet.
+FlowShield is a wearable device under development that estimates bladder volume from bioimpedance (BioZ) measurements taken with a belt around the lower abdomen. This repository contains the software prototype: a MATLAB Simulink model of filling and voiding with alert states, and a two-page Python GUI that runs the model and displays results. BioZ hardware (MAX30009 evaluation kit, electrodes, belt) has not been integrated yet.
 
-The Simulink model ('models/Flowshield_Prototypefinal.slx') simulates bladder volume using a differential equation (dV/dt = Q_in - Q_out) with Stateflow logic for the Normal, Warning (300mL) , and Urgent (600mL) alert states and for voiding.
+The Simulink model ('models/FlowShield_Prototypefinal.slx') simulates bladder volume using a differential equation (dV/dt = Q_in - Q_out) with Stateflow logic for the Normal, Warning (300mL) , and Urgent (600mL) alert states and for voiding.
 
 ## Repository Structure
 ```
-Flowshield/
+FlowShield/
 ├── main.py
 ├── requirements.txt
 ├── README.md
-├── gui/          (flowshield.ui, flowshield_ui.py, main_window.py)
+├── gui/          (FlowShield.ui, FlowShield_ui.py, main_window.py)
 ├── simulation/   (matlab_interface.py)
-└── models/       (Flowshield_Prototypefinal.slx)
+└── models/       (FlowShield_Prototypefinal.slx)
 ```
 
 ## Running the Simulink Model on Its Own
 Note: developed with MATLAB 25.1.0.2973910 (R2025a), with Simulink and Stateflow installed.
 1. Clone this repository.
-2. Open `models/Flowshield_Prototypefinal.slx` in MATLAB.
+2. Open `models/FlowShield_Prototypefinal.slx` in MATLAB.
 3. Double-click the `V_t` integrator block and set **Initial condition** to the starting bladder volume in mL.
 4. Run the model with the Run button or Ctrl + T.
 
@@ -45,5 +45,5 @@ Note: the Python version must be supported by your MATLAB release. For R2025a, u
 
 The first simulation takes longer (10-30 seconds) because MATLAB starts on the first run.
 
-Optional: install Qt Designer (included with PySide6 tools) only if you want to edit `gui/flowshield.ui`.
+Optional: install Qt Designer (included with PySide6 tools) only if you want to edit `gui/FlowShield.ui`.
 
